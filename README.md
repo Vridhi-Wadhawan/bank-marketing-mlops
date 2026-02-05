@@ -1,6 +1,6 @@
 # Bank Marketing Prediction API (MLOps)
 
-This project is an end-to-end MLOps workflow where a machine learning model is trained, containerized, and deployed as a production-ready REST API.
+This project demonstrates an end-to-end **Machine Learning Operations (MLOps)** workflow, where a predictive model is trained, containerized, and deployed as a production-ready REST API.
 
 The system predicts whether a bank customer is likely to subscribe to a term deposit based on marketing campaign data, enabling more targeted and efficient outreach.
 
@@ -8,60 +8,89 @@ The system predicts whether a bank customer is likely to subscribe to a term dep
 
 ## Project Highlights
 
-- Built a complete ML pipeline: data preparation → modeling → inference
-- Deployed a prediction service using Flask and Docker
-- Exposed model predictions via a REST API
-- Deployed and tested on cloud infrastructure (AWS EC2)
+- Built a complete ML pipeline from data preparation to model inference  
+- Developed a REST API for real-time predictions using Flask  
+- Containerized the application using Docker for portability and consistency  
+- Deployed and tested the service on cloud infrastructure (AWS EC2)
 
 ---
 
 ## Business Context
 
-Marketing campaigns often suffer from low conversion rates due to untargeted outreach.  
-This project addresses that by predicting customer subscription likelihood, helping prioritize high-probability leads and reduce ineffective contact attempts.
+Bank marketing campaigns often experience low conversion rates due to broad, untargeted outreach.  
+This project addresses the problem by predicting customer subscription likelihood, allowing marketing teams to prioritize high-probability leads and reduce ineffective contact attempts.
 
 ---
 
 ## Model & Pipeline Overview
 
-- Model: K-Nearest Neighbors (KNN)
-- Data: UCI Bank Marketing Dataset
-- Preprocessing:
+- **Model:** K-Nearest Neighbors (KNN)
+- **Dataset:** UCI Bank Marketing Dataset
+- **Preprocessing:**
   - Feature engineering
-  - Categorical encoding
-  - Numerical scaling
-- Output:
-  - Binary prediction (Yes / No)
-  - Class probabilities
+  - Categorical variable encoding
+  - Numerical feature scaling
+- **Inference Output:**
+  - Binary prediction (Subscribe / Not Subscribe)
+  - Class-level probability scores
+
+---
+
+## System Architecture
+
+![MLOps Architecture](/architecture.png)
+
+**High-level flow:**
+1. Raw marketing data is processed using a preprocessing pipeline  
+2. The trained model and pipeline are serialized for inference  
+3. A Flask-based API serves predictions  
+4. The application is containerized using Docker  
+5. The container is deployed on AWS EC2 for external access
 
 ---
 
 ## Tech Stack
 
-- Python
-- scikit-learn
-- Flask
-- Docker & Docker Compose
-- AWS EC2
+- Python  
+- scikit-learn  
+- Flask  
+- Docker & Docker Compose  
+- AWS EC2  
 
 ---
 
 ## Repository Structure
 
-- `ML_Ops.ipynb` – Model training and experimentation
-- `ML_Ops_App.ipynb` – API logic and inference flow
-- `Dockerfile` – Container configuration
-- `requirements.txt` – Python dependencies
-- `deployment-process.md` – Detailed deployment steps and execution log
+- `ML_Ops.ipynb` – Model training, feature engineering, and evaluation  
+- `ML_Ops_App.ipynb` – Inference logic and API integration  
+- `Dockerfile` – Container build configuration  
+- `requirements.txt` – Python dependencies  
+- `deployment-process.md` – Detailed deployment steps and execution logs  
 
 ---
 
-## Deployment & Execution Notes
+## API Usage (Minimal Example)
 
-Detailed deployment steps, commands, and cloud setup are documented separately in **`deployment-process.md`**.
+### Health Check
+```bash
+curl http://<EC2_PUBLIC_IP>:5000/
+```
 
----
+### Prediction Request
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d @sample.json \
+  http://<EC2_PUBLIC_IP>:5000/predict
 
-## Notes
+### Sample Response
+{
+  "prediction": 0,
+  "prediction_proba_no": 0.91,
+  "prediction_proba_yes": 0.09
+}
 
-This repository focuses on demonstrating production-oriented machine learning practices rather than model benchmarking alone.
+## Deployment Notes
+Detailed cloud setup, Docker commands, and validation steps are documented in `deployment-process.md`.
+
+## Final Note
+This repository emphasizes production-oriented machine learning practices, focusing on deployment readiness, reproducibility, and real-world decision support rather than model benchmarking alone.
