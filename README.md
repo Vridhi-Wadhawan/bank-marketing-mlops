@@ -22,6 +22,12 @@ This project addresses the problem by predicting customer subscription likelihoo
 
 ---
 
+## Scope & Limitations
+
+This project focuses on model deployment and inference. Continuous retraining, CI/CD, and monitoring are outside the current scope but can be logical next steps.
+
+---
+
 ## Model & Pipeline Overview
 
 - **Model:** K-Nearest Neighbors (KNN)
