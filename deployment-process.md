@@ -1,8 +1,10 @@
 # Bank Marketing Prediction API – MLOps Deployment
 ## Deployment Process Document
-==============================================================
-PROJECT OVERVIEW
-==============================================================
+
+> This document captures the end-to-end deployment steps followed for this project.
+> It is intended as a technical reference and execution log, not as a quick-start guide.
+
+#### PROJECT OVERVIEW
 This project demonstrates an end-to-end MLOps workflow to deploy a machine learning model as a REST API. It includes:
 
 - Docker containerization  
@@ -10,18 +12,16 @@ This project demonstrates an end-to-end MLOps workflow to deploy a machine learn
 - Deployment to AWS EC2  
 - Prediction serving with Flask
 
-==============================================================
-BUSINESS OBJECTIVE
-==============================================================
+#### BUSINESS OBJECTIVE
+
 The goal of this project is to predict whether a bank customer will subscribe to a term deposit based on marketing campaign data. This allows the bank to:
 
 - Optimize marketing efforts
 - Focus resources on likely responders
 - Improve conversion rates
 
-==============================================================
-DATASET AND STATISTICAL INSIGHTS
-==============================================================
+#### DATASET AND STATISTICAL INSIGHTS
+
 Dataset:  
 - Bank Marketing Dataset (UCI)  
 - 20+ features including:
@@ -38,9 +38,8 @@ Key Statistical Insights:
 - Contact duration is positively correlated with conversion.
 - Economic conditions (euribor3m) influence success probability.
 
-==============================================================
-FINAL MODEL AND INFERENCE
-==============================================================
+#### FINAL MODEL AND INFERENCE
+
 Model Used:
 - K-Nearest Neighbors Classifier
 - Preprocessing Pipeline includes:
@@ -59,9 +58,8 @@ Example response:
   "prediction_proba_yes": 0.0
 }
 
-==============================================================
-LOCAL DEPLOYMENT
-==============================================================
+#### LOCAL DEPLOYMENT
+
 Note: Local deployment done on Gooel Cloud Shell as Docker desktop causing laptop to crash 
 
 1. Upload following files on Google Cloud Shell
@@ -103,12 +101,9 @@ docker stop $(docker ps -aq)
 docker rm $(docker ps -aq)
 docker rmi $(docker images -q)
 
-**************************************************************
-AMAZON WEB SERVICES (AWS) DEPLOYMENT
-**************************************************************
-==============================================================
-1. AWS EC2 SETUP
-==============================================================
+#### AMAZON WEB SERVICES (AWS) DEPLOYMENT
+
+##### 1. AWS EC2 SETUP
 1. Log in to AWS Console
 - Navigate to EC2 Dashboard.
 
@@ -126,9 +121,8 @@ AMAZON WEB SERVICES (AWS) DEPLOYMENT
 - Copy the Public IPv4 address.
 - IPv4 Key: 43.204.221.151
 
-==============================================================
-2. TRANSFER PROJECT FILES
-==============================================================
+##### 2. TRANSFER PROJECT FILES
+
 From your Windows Command Prompt:
 
 scp -i "C:\Users\V\Downloads\mlops-key.pem" -r "C:\Users\V\Desktop\mlops\Assignment\Final\Local Deployment Final\AWS_Docker_Deployment" ubuntu@<PUBLIC_IP>:/home/ubuntu/
@@ -137,9 +131,8 @@ scp -i "C:\Users\V\Downloads\mlops-key.pem" -r "C:\Users\V\Desktop\mlops\Assignm
 This copies all project files into:
  /home/ubuntu/AWS_Docker_Deployment
 
-==============================================================
-2. CONNECT TO EC2 VIA SSH
-==============================================================
+##### 3. CONNECT TO EC2 VIA SSH
+
 From Windows Command Prompt:
 ssh -i "C:\Users\V\Downloads\mlops-key.pem" ubuntu@<PUBLIC_IP>
 ssh -i "C:\Users\V\Downloads\mlops-key.pem" ubuntu@43.204.221.151
@@ -152,9 +145,7 @@ ls
 Changing Directories
 cd "AWS_Docker_Deployment"
 
-==============================================================
-3. INSTALL DOCKER
-==============================================================
+##### 4. INSTALL DOCKER
 
 Inside EC2 terminal:
 
@@ -197,9 +188,8 @@ docker --version
 docker version
 docker compose version
 
-==============================================================
-5. BUILD AND RUN DOCKER
-==============================================================
+##### 5. BUILD AND RUN DOCKER
+
 Inside EC2:
 
 Changing Directories
@@ -227,9 +217,8 @@ docker ps
 Should show:
 0.0.0.0:5000->5000/tcp
 
-==============================================================
-6. TESTING THE API
-==============================================================
+##### 6. TESTING THE API
+
 Check that server is running:
 curl http://localhost:5000/
 
@@ -241,9 +230,7 @@ curl -X POST -H "Content-Type: application/json" -d @sample.json http://localhos
 
 Expected JSON response with prediction probabilities.
 
-==============================================================
-7. STOPPING AND RESTARTING
-==============================================================
+##### 7. STOPPING AND RESTARTING
 
 Stop container:
 docker compose down
@@ -256,9 +243,8 @@ AWS Console > EC2 > Instances > Actions > Instance State > Stop
 
 (Note: Public IP may change after restart.)
 
-==============================================================
-8. DEPLOYMENT VERIFICATION CHECKLIST
-==============================================================
+##### 8. DEPLOYMENT VERIFICATION CHECKLIST
+
 - Docker image built successfully  
 - Flask API responds to GET requests  
 - API processes JSON input and returns prediction  
