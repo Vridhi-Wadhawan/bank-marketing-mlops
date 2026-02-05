@@ -83,17 +83,22 @@ curl http://<EC2_PUBLIC_IP>:5000/
 ```
 
 ### Prediction Request
+```bash
 curl -X POST \
   -H "Content-Type: application/json" \
   -d @sample.json \
   http://<EC2_PUBLIC_IP>:5000/predict
+```
 
 ### Sample Response
+
+```bash
 {
   "prediction": 0,
   "prediction_proba_no": 0.91,
   "prediction_proba_yes": 0.09
 }
+```
 
 ## Deployment Notes
 Detailed cloud setup, Docker commands, and validation steps are documented in `deployment-process.md`.
